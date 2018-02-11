@@ -7,34 +7,44 @@ const colorSchemes = [
     backgroundColor: '#062F4F',
     headingColor: '#4ABDAC',
   },
-  { backgroundColor: '#EA526F',
+  {
+    backgroundColor: '#EA526F',
     headingColor: '#FCEADE'
   },
-  { backgroundColor: '#171738',
+  {
+    backgroundColor: '#171738',
     headingColor: '#DFF3EF'
   },
-  { backgroundColor: '#272932',
+  {
+    backgroundColor: '#272932',
     headingColor: '#72B01D'
   },
-  { backgroundColor: '#72B01D',
+  {
+    backgroundColor: '#72B01D',
     headingColor: '#001D4A'
   },
-  { backgroundColor: '#103900',
+  {
+    backgroundColor: '#103900',
     headingColor: '#0FFF95'
   },
-  { backgroundColor: '#1D1E2C',
+  {
+    backgroundColor: '#1D1E2C',
     headingColor: '#DDBDD5'
   },
-  { backgroundColor: '#59656F',
+  {
+    backgroundColor: '#59656F',
     headingColor: '#F7EBEC'
   },
-  { backgroundColor: '#292F36',
+  {
+    backgroundColor: '#292F36',
     headingColor: '#FF6B6B'
   },
-  { backgroundColor: '#373F51',
+  {
+    backgroundColor: '#373F51',
     headingColor: '#DAA49A'
   },
-  { backgroundColor: '#424242',
+  {
+    backgroundColor: '#424242',
     headingColor: '#FCFC62'
   }
 ]
@@ -45,9 +55,12 @@ class App extends React.Component {
     this.state = {
       loading: true,
       stockData: [],
-      colorSchemeIndex: 0
+      colorSchemeIndex: 0,
+      value: ''
     }
     this.changeIndex = this.changeIndex.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -59,13 +72,14 @@ class App extends React.Component {
       const singleStockData = data.data;
       this.setState({
         stockData: [...this.state.stockData, singleStockData],
-        loading: false
+        loading: false,
+        value: ''
       })
     })
   }
 
   generateRandomNumber(messages) {
-   return Math.floor(Math.random() * messages.length)
+    return Math.floor(Math.random() * messages.length)
   }
 
   generateRandomColorSchemeIndex() {
@@ -78,11 +92,20 @@ class App extends React.Component {
     })
   }
 
+  handleChange(event) {
+    console.log("Form was submitted!");
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
   render() {
     let backgroundColor = colorSchemes[this.state.colorSchemeIndex].backgroundColor
     let headingColor = colorSchemes[this.state.colorSchemeIndex].headingColor
 
-    if (this.state.loading){
+    if (this.state.loading) {
       return (
         <Main {...this.props}>
           <div className="spinner">
@@ -96,12 +119,12 @@ class App extends React.Component {
       )
     }
 
-    return(
+    return (
       <Main {...this.props} backgroundColor={backgroundColor}>
         <div className='level' onClick={this.changeIndex}>
           <div className='level__inner'>
-            <h2 className='heading heading--level-1 util--text-align-c' style={{color: headingColor}}>
-            { this.state.stockData[0].symbol}: ${this.state.stockData[0].latestPrice}</h2>
+            <h2 className='heading heading--level-1 util--text-align-c' style={{ color: headingColor }}>
+              {this.state.stockData[0].symbol}: ${this.state.stockData[0].latestPrice}</h2>
           </div>
         </div>
       </Main>
@@ -111,8 +134,8 @@ class App extends React.Component {
 
 
 const Main = (props) => {
-  return(
-    <main className='body' role='main' style={{backgroundColor: props.backgroundColor}}>
+  return (
+    <main className='body' role='main' style={{ backgroundColor: props.backgroundColor }}>
       <div className='flex-container'>
         <div className='flex__item'>
           <div className='level level--padding-short'>
@@ -121,6 +144,17 @@ const Main = (props) => {
             </div>
           </div>
         </div>
+
+
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+
+
         <div className='flex__item'>
           {props.children}
         </div>
