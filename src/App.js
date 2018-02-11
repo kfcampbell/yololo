@@ -44,8 +44,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       loading: true,
-      messages: [],
-      currentMessageIndex: null,
+      stockData: [],
       colorSchemeIndex: 0
     }
     this.changeIndex = this.changeIndex.bind(this)
@@ -56,11 +55,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://commits-by-logan.herokuapp.com/api/commit_messages').then((data) => {
-      const messages = data.data.data
+    axios.get('https://api.iextrading.com/1.0/stock/alk/quote').then((data) => {
+      const singleStockData = data.data;
       this.setState({
-        messages: messages,
-        currentMessageIndex: this.generateRandomNumber(messages),
+        stockData: [...this.state.stockData, singleStockData],
         loading: false
       })
     })
@@ -76,7 +74,6 @@ class App extends React.Component {
 
   changeIndex() {
     this.setState({
-      currentMessageIndex: this.generateRandomNumber(this.state.messages),
       colorSchemeIndex: this.generateRandomColorSchemeIndex()
     })
   }
@@ -103,7 +100,8 @@ class App extends React.Component {
       <Main {...this.props} backgroundColor={backgroundColor}>
         <div className='level' onClick={this.changeIndex}>
           <div className='level__inner'>
-            <h2 className='heading heading--level-1 util--text-align-c' style={{color: headingColor}}>{ this.state.messages[this.state.currentMessageIndex].content }</h2>
+            <h2 className='heading heading--level-1 util--text-align-c' style={{color: headingColor}}>
+            { this.state.stockData[0].symbol}: ${this.state.stockData[0].latestPrice}</h2>
           </div>
         </div>
       </Main>
@@ -119,7 +117,7 @@ const Main = (props) => {
         <div className='flex__item'>
           <div className='level level--padding-short'>
             <div className='level__inner'>
-              <h1 className='heading heading--level-2 util--text-align-c'>Yololo</h1>
+              <h1 className='heading heading--level-2 util--text-align-c'>Stocks 'n' Stuff</h1>
             </div>
           </div>
         </div>
@@ -129,7 +127,7 @@ const Main = (props) => {
         <div className='flex__item'>
           <div className='level'>
             <div className='level__inner'>
-              <h3 className='heading heading--level-3 util--text-align-c'>Tap the text to get a new message</h3>
+              <h3 className='heading heading--level-3 util--text-align-c'>Click to change color.</h3>
             </div>
           </div>
         </div>
