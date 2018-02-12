@@ -6,5 +6,8 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+  "permissions": [
+    "storage"
+  ],
   "icons": { "16": "yololo-16.png", "128": "yololo-128.png" }
 }

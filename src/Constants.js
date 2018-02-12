@@ -45,5 +45,4 @@ module.exports = Object.freeze({
             headingColor: '#FCFC62'
         }
     ],
-    ACTION_VALID: 'Some other action',
 });

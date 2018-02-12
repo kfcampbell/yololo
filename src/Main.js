@@ -6,21 +6,45 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'check it out',
+            value: 'ALK',
+            stocksList: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        var val = this.state.value;
+        var s = this;
+        chrome.storage.sync.get(["stocksList"], function (items) {
+            s.setState({
+                value: val,
+                stocksList: items.stocksList
+            });
+        });
+    }
+
     handleChange(event) {
-        console.log("A letter was pressed: !");
+        var stocks = this.state.stocksList;
         this.setState({
-            value: event.target.value
+            value: event.target.value,
+            stocksList: stocks
         });
     }
 
     handleSubmit(event) {
-        alert('You clicked the submit button and nothing else: ' + this.state.value);
+        var stocks = this.state.stocksList;
+        stocks = [...stocks, this.state.value];
+        chrome.storage.sync.set({ 'stocksList': stocks }, function () {
+        });
+
+        var val = this.state.value;
+        this.setState({
+            value: val,
+            stocksList: stocks
+        });
+
+        alert('You clicked the submit button and nothing else: ' + JSON.stringify(stocks));
         event.preventDefault();
     }
 

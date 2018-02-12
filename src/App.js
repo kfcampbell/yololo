@@ -27,7 +27,6 @@ class App extends React.Component {
         loading: false,
       })
     });
-    console.log('test of constants', ConstantsList.ACTION_VALID);
   }
 
   generateRandomNumber(messages) {
