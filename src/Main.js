@@ -1,11 +1,12 @@
 import React from 'react';
+import './Main.css';
 
 class Main extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
+            value: 'check it out',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,6 +14,9 @@ class Main extends React.Component {
 
     handleChange(event) {
         console.log("A letter was pressed: !");
+        this.setState({
+            value: event.target.value
+        });
     }
 
     handleSubmit(event) {
@@ -33,11 +37,8 @@ class Main extends React.Component {
                     </div>
 
 
-                    <form onSubmit={this.handleSubmit}>
-                        <label>
-                            Name:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-                        </label>
+                    <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+                        <label><input type="text" defaultValue={this.state.value} /></label>
                         <input type="submit" value="Submit" />
                     </form>
 
@@ -48,7 +49,7 @@ class Main extends React.Component {
                     <div className='flex__item'>
                         <div className='level'>
                             <div className='level__inner'>
-                                <h3 className='heading heading--level-3 util--text-align-c'>Click to change color.</h3>
+                                <h3 className='heading heading--level-3 util--text-align-c'>Click a stock price to change color.</h3>
                             </div>
                         </div>
                     </div>
