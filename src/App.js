@@ -19,6 +19,9 @@ class App extends React.Component {
     this.props.bindShortcut('space', this.changeIndex)
   }
 
+  // idea: when instantiating main, pass in a function that causes this component to re-render.
+  // then main can call it when a new stock is added.
+  // first, need to alter this call to get each stock (maybe collect an array of Promises and then resolve all?)
   componentDidMount() {
     axios.get('https://api.iextrading.com/1.0/stock/alk/quote').then((data) => {
       const singleStockData = data.data;
