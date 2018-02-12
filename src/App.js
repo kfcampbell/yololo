@@ -46,7 +46,12 @@ class App extends React.Component {
     })
   }
 
+  newStockAdded(stocks) {
+    console.log('new stock added!', stocks);
+  }
   
+  // need to pass in newStockAdded to Main as a prop.
+  // don't think any other props being passed to Main matter.
   render() {
     let backgroundColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].backgroundColor
     let headingColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].headingColor

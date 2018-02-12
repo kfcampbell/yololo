@@ -12,6 +12,7 @@ class Main extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.newStockAdded = this.props.newStockAdded.bind(this);
     }
 
     componentDidMount() {
@@ -56,6 +57,7 @@ class Main extends React.Component {
                     stocksList: stocks
                 });
                 console.log(JSON.stringify(result.data));
+                this.newStockAdded(result.data);
             }
             else {
                 alert('Please enter a valid ticker symbol! Come on....');
