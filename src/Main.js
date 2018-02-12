@@ -36,12 +36,14 @@ class Main extends React.Component {
                         </div>
                     </div>
 
-
-                    <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                        <label><input type="text" defaultValue={this.state.value} /></label>
-                        <input type="submit" value="Submit" />
+                    <form>
+                        <h1>ADD NEW COMPANY TO LIST</h1>
+                        <div className="question">
+                            <input onChange={this.handleChange} type="text" required />
+                            <label>Type a ticker symbol here.</label>
+                        </div>
+                        <button onClick={this.handleSubmit}>ADD</button>
                     </form>
-
 
                     <div className='flex__item'>
                         {this.props.children}
