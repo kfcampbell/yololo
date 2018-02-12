@@ -1,5 +1,6 @@
 import React from 'react';
 import './Main.css';
+import { isValidTickerSymbol } from './Utils/Utils';
 
 class Main extends React.Component {
 
@@ -18,7 +19,7 @@ class Main extends React.Component {
         var s = this;
         chrome.storage.sync.get(['stocksList'], function (items) {
             var stocks = [];
-            if(items.stocksList) {
+            if (items.stocksList) {
                 stocks = items.stocksList;
             }
 
@@ -38,22 +39,29 @@ class Main extends React.Component {
     }
 
     handleSubmit(event) {
-        if(!this.state.value || this.state.value == undefined || this.state.value == '') {
+        if (!this.state.value || this.state.value == undefined || this.state.value == '') {
             return;
         }
 
-        var stocks = this.state.stocksList;
-        stocks = [...stocks, this.state.value];
-        chrome.storage.sync.set({ 'stocksList': stocks }, function () {
+        isValidTickerSymbol(this.state.value).then((result) => {
+            if (result.res) {
+                var stocks = this.state.stocksList;
+                stocks = [...stocks, this.state.value];
+                chrome.storage.sync.set({ 'stocksList': stocks }, function () {
+                });
+
+                var val = this.state.value;
+                this.setState({
+                    value: val,
+                    stocksList: stocks
+                });
+                console.log(JSON.stringify(result.data));
+            }
+            else {
+                alert('Please enter a valid ticker symbol! Come on....');
+            }
         });
 
-        var val = this.state.value;
-        this.setState({
-            value: val,
-            stocksList: stocks
-        });
-
-        alert('You clicked the submit button and nothing else: ' + JSON.stringify(stocks));
         event.preventDefault();
     }
 

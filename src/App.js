@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { mouseTrap } from 'react-mousetrap'
 import Main from './Main';
-import ConstantsList from './Constants';
+import ConstantsList from './Utils/Constants';
 
 class App extends React.Component {
   constructor(props) {
