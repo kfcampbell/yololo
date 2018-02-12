@@ -16,10 +16,15 @@ class Main extends React.Component {
     componentDidMount() {
         var val = this.state.value;
         var s = this;
-        chrome.storage.sync.get(["stocksList"], function (items) {
+        chrome.storage.sync.get(['stocksList'], function (items) {
+            var stocks = [];
+            if(items.stocksList) {
+                stocks = items.stocksList;
+            }
+
             s.setState({
                 value: val,
-                stocksList: items.stocksList
+                stocksList: stocks
             });
         });
     }
@@ -33,6 +38,10 @@ class Main extends React.Component {
     }
 
     handleSubmit(event) {
+        if(!this.state.value || this.state.value == undefined || this.state.value == '') {
+            return;
+        }
+
         var stocks = this.state.stocksList;
         stocks = [...stocks, this.state.value];
         chrome.storage.sync.set({ 'stocksList': stocks }, function () {
