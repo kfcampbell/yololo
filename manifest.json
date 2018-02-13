@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "yololo",
+  "name": "Tyler Eliel's Very Own Stock New Tab Extension",
   "version": "0.2",
-  "description": "Displays a commit message from a fis-labs repository",
+  "description": "Maybe this will make Tyler proud of me.",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
