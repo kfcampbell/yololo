@@ -58,7 +58,7 @@ class App extends React.Component {
 
     if (this.state.loading) {
       return (
-        <Main {...this.props}>
+        <Main newStockAdded={this.newStockAdded} {...this.props}>
           <div className="spinner">
             <div className="rect1"></div>
             <div className="rect2"></div>
@@ -83,4 +83,4 @@ class App extends React.Component {
   }
 }
 
-export default mouseTrap(App)
+export default mouseTrap(App);

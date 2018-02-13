@@ -44,10 +44,15 @@ class Main extends React.Component {
             return;
         }
 
+        if(this.state.stocksList.includes(this.state.value.toLowerCase())) {
+            alert("You've already added this stock!");
+            return;
+        }
+
         isValidTickerSymbol(this.state.value).then((result) => {
             if (result.res) {
                 var stocks = this.state.stocksList;
-                stocks = [...stocks, this.state.value];
+                stocks = [...stocks, this.state.value.toLowerCase()];
                 chrome.storage.sync.set({ 'stocksList': stocks }, function () {
                 });
 
@@ -89,7 +94,7 @@ class Main extends React.Component {
                     </form>
 
                     <div className='flex__item'>
-                        {this.props.children}
+                        {this.state.stocksList}
                     </div>
                     <div className='flex__item'>
                         <div className='level'>
