@@ -44,7 +44,7 @@ class Main extends React.Component {
             return;
         }
 
-        if(this.state.stocksList.includes(this.state.value.toLowerCase())) {
+        if (this.state.stocksList.includes(this.state.value.toLowerCase())) {
             alert("You've already added this stock!");
             return;
         }
@@ -73,39 +73,78 @@ class Main extends React.Component {
     }
 
     render() {
-        return (
-            <main className='body' role='main' style={{ backgroundColor: this.props.backgroundColor }}>
-                <div className='flex-container'>
-                    <div className='flex__item'>
-                        <div className='level level--padding-short'>
-                            <div className='level__inner'>
-                                <h1 className='heading heading--level-2 util--text-align-c'>Stocks 'n' Stuff</h1>
+        var headingColor = this.props.headingColor;
+        if(this.state.stocksList === undefined) {
+            return (
+                    <main className='body' role='main' style={{ backgroundColor: this.props.backgroundColor }}>
+                        <div className='flex-container'>
+                            <div className='flex__item'>
+                                <div className='level level--padding-short'>
+                                    <div className='level__inner'>
+                                        <h1 className='heading heading--level-2 util--text-align-c'>Stocks 'n' Stuff</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <form>
+                                <h1>ADD NEW COMPANY TO LIST</h1>
+                                <div className="question">
+                                    <input onChange={this.handleChange} type="text" required />
+                                    <label>Type a ticker symbol here.</label>
+                                </div>
+                                <button onClick={this.handleSubmit}>ADD</button>
+                            </form>
+                            <div className='flex__item'>
+                                <div className='level'>
+                                    <div className='level__inner'>
+                                        <h3 className='heading heading--level-3 util--text-align-c'>Click a stock price to change color.</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <form>
-                        <h1>ADD NEW COMPANY TO LIST</h1>
-                        <div className="question">
-                            <input onChange={this.handleChange} type="text" required />
-                            <label>Type a ticker symbol here.</label>
-                        </div>
-                        <button onClick={this.handleSubmit}>ADD</button>
-                    </form>
-
-                    <div className='flex__item'>
-                        {this.state.stocksList}
-                    </div>
-                    <div className='flex__item'>
-                        <div className='level'>
-                            <div className='level__inner'>
-                                <h3 className='heading heading--level-3 util--text-align-c'>Click a stock price to change color.</h3>
+                    </main>
+            )
+        }
+        else {
+            return (
+                <main className='body' role='main' style={{ backgroundColor: this.props.backgroundColor }}>
+                        <div className='flex-container'>
+                            <div className='flex__item'>
+                                <div className='level level--padding-short'>
+                                    <div className='level__inner'>
+                                        <h1 className='heading heading--level-2 util--text-align-c'>Stocks 'n' Stuff</h1>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <form>
+                                <h1>ADD NEW COMPANY TO LIST</h1>
+                                <div className="question">
+                                    <input onChange={this.handleChange} type="text" required />
+                                    <label>Type a ticker symbol here.</label>
+                                </div>
+                                <button onClick={this.handleSubmit}>ADD</button>
+                            </form>
+        
+                            <div className='flex__item'>
+                                {
+                                    this.props.stocks.map(function (stockData, index) {
+                                        return (
+                                            <h2 className='heading heading--level-1 util--text-align-c' key={index} style={{ color: headingColor }}>
+                                                {stockData.symbol}: ${stockData.latestPrice}</h2>);
+                                    })
+                                }
+                            </div>
+                            <div className='flex__item'>
+                                <div className='level'>
+                                    <div className='level__inner'>
+                                        <h3 className='heading heading--level-3 util--text-align-c'>Click a stock price to change color.</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </main>
-        )
+                    </main>
+            )
+        }
     }
 };
 

@@ -48,8 +48,12 @@ class App extends React.Component {
 
   newStockAdded(stocks) {
     console.log('new stock added!', stocks);
+    this.setState({
+      stockData: [...this.state.stockData, stocks],
+      loading: false
+    });
   }
-  
+
   // need to pass in newStockAdded to Main as a prop.
   // don't think any other props being passed to Main matter.
   render() {
@@ -58,7 +62,7 @@ class App extends React.Component {
 
     if (this.state.loading) {
       return (
-        <Main newStockAdded={this.newStockAdded} {...this.props}>
+        <Main newStockAdded={this.newStockAdded} headingColor={headingColor} stocks={this.state.stockData} {...this.props}>
           <div className="spinner">
             <div className="rect1"></div>
             <div className="rect2"></div>
@@ -71,11 +75,16 @@ class App extends React.Component {
     }
 
     return (
-      <Main {...this.props} backgroundColor={backgroundColor}>
+      <Main {...this.props} backgroundColor={backgroundColor} stocks={this.state.stockData} headingColor={headingColor}>
         <div className='level' onClick={this.changeIndex}>
           <div className='level__inner'>
-            <h2 className='heading heading--level-1 util--text-align-c' style={{ color: headingColor }}>
-              {this.state.stockData[0].symbol}: ${this.state.stockData[0].latestPrice}</h2>
+            { 
+              this.state.stockData.map(function (stockData, index) {
+                return (
+                  <h2 className='heading heading--level-1 util--text-align-c' key={index} style={{ color: headingColor }}>
+                    {stockData.symbol}: ${stockData.latestPrice}</h2>);
+              })
+            }
           </div>
         </div>
       </Main>
