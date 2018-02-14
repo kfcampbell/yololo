@@ -15,9 +15,9 @@
     -webkit-font-smoothing: antialiased;
   }
   
-  html {
+  /* html {
     background-color: #ff4a56;
-  }
+  } */
   
   form {
     position: relative;
@@ -128,3 +128,13 @@
     transform: translate(5px, -35px) scale(0.6);
   }
   
+.button-error {
+  padding: 0px;
+  background: rgb(202, 60, 60);
+  color: white;
+}
+
+.small-button {
+  width: 50px;
+  height: 25px;
+}

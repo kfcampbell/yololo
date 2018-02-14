@@ -2,7 +2,7 @@ module.exports = Object.freeze({
     colorSchemes: [
         {
             backgroundColor: '#062F4F',
-            headingColor: '#4ABDAC',
+            headingColor: '#FCEADE' //'#4ABDAC',
         },
         {
             backgroundColor: '#EA526F',
