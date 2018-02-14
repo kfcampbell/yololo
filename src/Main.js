@@ -58,7 +58,7 @@ class Main extends React.Component {
                     <div className='flex__item'>
                         <div className='level level--padding-short'>
                             <div className='level__inner'>
-                                <h1 className='heading heading--level-2 util--text-align-c'>Stocks 'n' Stuff</h1>
+                                <h1 className='heading heading--level-2 util--text-align-d'>Stocks 'n' Stuff</h1>
                             </div>
                         </div>
                     </div>
@@ -68,8 +68,9 @@ class Main extends React.Component {
                             this.props.stocks.map(function (stockData, index) {
                                 return (
                                     <h3 className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
-                                        {stockData.symbol} ({stockData.companyName}): ${stockData.latestPrice}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button onClick={() => s.handleStockRemoved(stockData.symbol)} className="button-error small-button pure-button">X</button>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {stockData.symbol} ({stockData.companyName}): ${stockData.latestPrice}
                                     </h3>);
                             })
                         }
@@ -83,7 +84,6 @@ class Main extends React.Component {
                         </div>
                         <button onClick={this.handleSubmit}>ADD</button>
                     </form>
-
 
                 </div>
             </main>
