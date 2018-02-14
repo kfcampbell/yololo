@@ -43,11 +43,24 @@ class App extends React.Component {
     stocksSymbols = [...stocksSymbols, stockInfo.symbol];
 
     chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {
-      console.log('successfully updated stocks');
     });
 
     this.setState({
       stockData: [...this.state.stockData, stockInfo],
+    });
+  }
+
+  stockRemoved(tickerSymbol) {
+    var stocksSymbols = this.state.stockData.map(x => x.symbol);
+    stocksSymbols = stocksSymbols.filter(x => x !== tickerSymbol);
+
+    var stocksData = this.state.stockData.filter(x => x.symbol !== tickerSymbol);
+
+    chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {
+    });
+
+    this.setState({
+      stockData: stocksData
     });
   }
 
@@ -58,6 +71,7 @@ class App extends React.Component {
     return (
       <Main {...this.props}
         newStockAdded={this.newStockAdded.bind(this)}
+        stockRemoved={this.stockRemoved.bind(this)}
         backgroundColor={backgroundColor}
         stocks={this.state.stockData}
         headingColor={headingColor}>

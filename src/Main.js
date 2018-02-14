@@ -11,6 +11,7 @@ class Main extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleStockRemoved = this.handleStockRemoved.bind(this);
     }
 
     handleChange(event) {
@@ -44,8 +45,13 @@ class Main extends React.Component {
         event.preventDefault();
     }
 
+    handleStockRemoved(symbol) {
+        this.props.stockRemoved(symbol);
+    }
+
     render() {
         var headingColor = this.props.headingColor;
+        var s = this;
         return (
             <main className='body' role='main' style={{ backgroundColor: this.props.backgroundColor }}>
                 <div className='flex-container'>
@@ -71,7 +77,9 @@ class Main extends React.Component {
                             this.props.stocks.map(function (stockData, index) {
                                 return (
                                     <h3 className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
-                                        {stockData.symbol}: ${stockData.latestPrice}</h3>);
+                                        {stockData.symbol}: ${stockData.latestPrice}...
+                                        <button onClick={() => s.handleStockRemoved(stockData.symbol)}>Remove</button>
+                                    </h3>);
                             })
                         }
                     </div>
