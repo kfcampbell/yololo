@@ -63,18 +63,29 @@ class Main extends React.Component {
                         </div>
                     </div>
 
-                    <div className='flex__item'>
+                    <table className='flex__item heading heading--level-3 util--text-align-c'>
+                        <tr>
+                            <th className='heading heading--level-3 util--text-align-c' style={{ color: headingColor }}>Remove From List</th>
+                            <th className='heading heading--level-3 util--text-align-c' style={{ color: headingColor }}>Ticker</th>
+                            <th className='heading heading--level-3 util--text-align-c' style={{ color: headingColor }}>Full Company Name</th>
+                            <th>Latest Price</th>
+                            <th>Change</th>
+                            <th>YTD Change</th>
+                        </tr>
                         {
                             this.props.stocks.map(function (stockData, index) {
                                 return (
-                                    <h3 className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
-                                        <button onClick={() => s.handleStockRemoved(stockData.symbol)} className="button-error small-button pure-button">X</button>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        {stockData.symbol} ({stockData.companyName}): ${stockData.latestPrice}
-                                    </h3>);
+                                    <tr className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
+                                        <td><button onClick={() => s.handleStockRemoved(stockData.symbol)} className="button-error small-button pure-button">X</button></td>
+                                        <td>{stockData.symbol}</td>
+                                        <td>{stockData.companyName}</td>
+                                        <td>${stockData.latestPrice}</td>
+                                        <td>{stockData.change}</td>
+                                        <td>{stockData.ytdChange.toFixed(2)}</td>
+                                    </tr>);
                             })
                         }
-                    </div>
+                    </table>
 
                     <form>
                         <h1>ADD NEW COMPANY TO LIST</h1>
