@@ -68,7 +68,7 @@ class Main extends React.Component {
                             this.props.stocks.map(function (stockData, index) {
                                 return (
                                     <h3 className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
-                                        {stockData.symbol}: ${stockData.latestPrice}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        {stockData.symbol} ({stockData.companyName}): ${stockData.latestPrice}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button onClick={() => s.handleStockRemoved(stockData.symbol)} className="button-error small-button pure-button">X</button>
                                     </h3>);
                             })
