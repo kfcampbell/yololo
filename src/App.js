@@ -3,6 +3,7 @@ import axios from 'axios'
 import { mouseTrap } from 'react-mousetrap'
 import Main from './Main';
 import ConstantsList from './Utils/Constants';
+import { isValidTickerSymbol } from './Utils/Utils';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,12 +24,14 @@ class App extends React.Component {
   // then main can call it when a new stock is added.
   // first, need to alter this call to get each stock (maybe collect an array of Promises and then resolve all?)
   componentDidMount() {
-    axios.get('https://api.iextrading.com/1.0/stock/alk/quote').then((data) => {
-      const singleStockData = data.data;
-      this.setState({
-        stockData: [...this.state.stockData, singleStockData],
-        loading: false,
-      })
+    isValidTickerSymbol('alk').then((result) => {
+      if (result.res) {
+        const singleStockData = result.data;
+        this.setState({
+          stockData: [...this.state.stockData, singleStockData],
+          loading: false,
+        })
+      }
     });
   }
 
@@ -78,7 +81,7 @@ class App extends React.Component {
       <Main {...this.props} backgroundColor={backgroundColor} stocks={this.state.stockData} headingColor={headingColor}>
         <div className='level' onClick={this.changeIndex}>
           <div className='level__inner'>
-            { 
+            {
               this.state.stockData.map(function (stockData, index) {
                 return (
                   <h2 className='heading heading--level-1 util--text-align-c' key={index} style={{ color: headingColor }}>
