@@ -62,10 +62,7 @@ class App extends React.Component {
 
   newStockAdded(stockInfo) {
 
-    var stocksData = this.state.stockData;
-    var stocksSymbols = stocksData.map(x => {
-      return x.symbol;
-    });
+    var stocksSymbols = this.state.stockData.map(x => x.symbol);
     stocksSymbols = [...stocksSymbols, stockInfo.symbol];
 
     chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {

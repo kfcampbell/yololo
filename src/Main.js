@@ -11,7 +11,7 @@ class Main extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.newStockAdded = this.props.newStockAdded.bind(this);
+        //this.newStockAdded = this.props.newStockAdded.bind(this);
     }
 
     handleChange(event) {
@@ -35,7 +35,7 @@ class Main extends React.Component {
         isValidTickerSymbol(this.state.value).then((result) => {
             if (result.res) {
                 var stocks = this.props.stocks;
-                this.newStockAdded(result.data);
+                this.props.newStockAdded(result.data);
             }
             else {
                 alert('Please enter a valid ticker symbol! Come on....');
