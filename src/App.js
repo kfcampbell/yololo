@@ -29,6 +29,10 @@ class App extends React.Component {
             return;
           }
           stocks = [...stocks, result.data];
+          stocks = stocks.sort(function (a, b) {
+            return a.symbol.localeCompare(b.symbol);
+          });
+
           s.setState({
             stockData: stocks,
           });
@@ -45,8 +49,13 @@ class App extends React.Component {
     chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {
     });
 
+    var stocks = [...this.state.stockData, stockInfo];
+    stocks = stocks.sort(function (a, b) {
+      return a.symbol.localeCompare(b.symbol);
+    });
+
     this.setState({
-      stockData: [...this.state.stockData, stockInfo],
+      stockData: stocks
     });
   }
 
