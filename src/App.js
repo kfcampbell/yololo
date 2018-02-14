@@ -54,20 +54,13 @@ class App extends React.Component {
   render() {
     let backgroundColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].backgroundColor
     let headingColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].headingColor
-    
+
     return (
-      <Main {...this.props} backgroundColor={backgroundColor} stocks={this.state.stockData} headingColor={headingColor}>
-        <div className='level'>
-          <div className='level__inner'>
-            {
-              this.state.stockData.map(function (stockData, index) {
-                return (
-                  <h2 className='heading heading--level-1 util--text-align-c' key={index} style={{ color: headingColor }}>
-                    {stockData.symbol}: ${stockData.latestPrice}</h2>);
-              })
-            }
-          </div>
-        </div>
+      <Main {...this.props}
+        newStockAdded={this.newStockAdded.bind(this)}
+        backgroundColor={backgroundColor}
+        stocks={this.state.stockData}
+        headingColor={headingColor}>
       </Main>
     )
   }
