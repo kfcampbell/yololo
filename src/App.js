@@ -9,7 +9,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       stockData: [],
       colorSchemeIndex: 0,
     };
@@ -31,7 +30,7 @@ class App extends React.Component {
           }
           stocks = [...stocks, result.data];
           s.setState({
-            stockData: stocks
+            stockData: stocks,
           });
         });
       });
@@ -49,28 +48,13 @@ class App extends React.Component {
 
     this.setState({
       stockData: [...this.state.stockData, stockInfo],
-      loading: false
     });
   }
 
   render() {
     let backgroundColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].backgroundColor
     let headingColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].headingColor
-
-    if (this.state.loading) {
-      return (
-        <Main newStockAdded={this.newStockAdded.bind(this)} headingColor={headingColor} stocks={this.state.stockData} {...this.props}>
-          <div className="spinner">
-            <div className="rect1"></div>
-            <div className="rect2"></div>
-            <div className="rect3"></div>
-            <div className="rect4"></div>
-            <div className="rect5"></div>
-          </div>
-        </Main>
-      )
-    }
-
+    
     return (
       <Main {...this.props} backgroundColor={backgroundColor} stocks={this.state.stockData} headingColor={headingColor}>
         <div className='level'>
