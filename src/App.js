@@ -24,14 +24,25 @@ class App extends React.Component {
   // then main can call it when a new stock is added.
   // first, need to alter this call to get each stock (maybe collect an array of Promises and then resolve all?)
   componentDidMount() {
-    isValidTickerSymbol('alk').then((result) => {
-      if (result.res) {
-        const singleStockData = result.data;
-        this.setState({
-          stockData: [...this.state.stockData, singleStockData],
-          loading: false,
-        })
+
+    var s = this;
+    chrome.storage.sync.get(['stocksList'], function (items) {
+      var stocks = [];
+      if (!items.stocksList) {
+        return;
       }
+
+      items.stocksList.forEach(stock => {
+        isValidTickerSymbol(stock).then((result) => {
+          if (!result.res) {
+            return;
+          }
+          stocks = [...stocks, result.data];
+          s.setState({
+            stockData: stocks
+          });
+        });
+      });
     });
   }
 
@@ -49,16 +60,24 @@ class App extends React.Component {
     })
   }
 
-  newStockAdded(stocks) {
-    console.log('new stock added!', stocks);
+  newStockAdded(stockInfo) {
+
+    var stocksData = this.state.stockData;
+    var stocksSymbols = stocksData.map(x => {
+      return x.symbol;
+    });
+    stocksSymbols = [...stocksSymbols, stockInfo.symbol];
+
+    chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {
+      console.log('successfully updated stocks with ', stockinfo.symbol);
+    });
+
     this.setState({
-      stockData: [...this.state.stockData, stocks],
+      stockData: [...this.state.stockData, stockInfo],
       loading: false
     });
   }
 
-  // need to pass in newStockAdded to Main as a prop.
-  // don't think any other props being passed to Main matter.
   render() {
     let backgroundColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].backgroundColor
     let headingColor = ConstantsList.colorSchemes[this.state.colorSchemeIndex].headingColor
