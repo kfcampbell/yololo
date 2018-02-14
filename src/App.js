@@ -7,22 +7,14 @@ import { isValidTickerSymbol } from './Utils/Utils';
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loading: true,
       stockData: [],
       colorSchemeIndex: 0,
-    }
-    this.changeIndex = this.changeIndex.bind(this)
+    };
   }
 
-  componentWillMount() {
-    this.props.bindShortcut('space', this.changeIndex)
-  }
-
-  // idea: when instantiating main, pass in a function that causes this component to re-render.
-  // then main can call it when a new stock is added.
-  // first, need to alter this call to get each stock (maybe collect an array of Promises and then resolve all?)
   componentDidMount() {
 
     var s = this;
@@ -46,28 +38,13 @@ class App extends React.Component {
     });
   }
 
-  generateRandomNumber(messages) {
-    return Math.floor(Math.random() * messages.length)
-  }
-
-  generateRandomColorSchemeIndex() {
-    return Math.floor(Math.random() * ConstantsList.colorSchemes.length)
-  }
-
-  changeIndex() {
-    this.setState({
-      colorSchemeIndex: this.generateRandomColorSchemeIndex()
-    })
-  }
-
   newStockAdded(stockInfo) {
 
-    // problem: *this* here thinks its in the Main component.
     var stocksSymbols = this.state.stockData.map(x => x.symbol);
     stocksSymbols = [...stocksSymbols, stockInfo.symbol];
 
     chrome.storage.sync.set({ 'stocksList': stocksSymbols }, function () {
-      console.log('successfully updated stocks with ', stockinfo.symbol);
+      console.log('successfully updated stocks');
     });
 
     this.setState({
@@ -82,7 +59,7 @@ class App extends React.Component {
 
     if (this.state.loading) {
       return (
-        <Main newStockAdded={this.newStockAdded} headingColor={headingColor} stocks={this.state.stockData} {...this.props}>
+        <Main newStockAdded={this.newStockAdded.bind(this)} headingColor={headingColor} stocks={this.state.stockData} {...this.props}>
           <div className="spinner">
             <div className="rect1"></div>
             <div className="rect2"></div>
@@ -96,7 +73,7 @@ class App extends React.Component {
 
     return (
       <Main {...this.props} backgroundColor={backgroundColor} stocks={this.state.stockData} headingColor={headingColor}>
-        <div className='level' onClick={this.changeIndex}>
+        <div className='level'>
           <div className='level__inner'>
             {
               this.state.stockData.map(function (stockData, index) {

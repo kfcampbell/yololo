@@ -71,17 +71,10 @@ class Main extends React.Component {
                         {
                             this.props.stocks.map(function (stockData, index) {
                                 return (
-                                    <h2 className='heading heading--level-1 util--text-align-c' key={index} style={{ color: headingColor }}>
-                                        {stockData.symbol}: ${stockData.latestPrice}</h2>);
+                                    <h3 className='heading heading--level-3 util--text-align-c' key={index} style={{ color: headingColor }}>
+                                        {stockData.symbol}: ${stockData.latestPrice}</h3>);
                             })
                         }
-                    </div>
-                    <div className='flex__item'>
-                        <div className='level'>
-                            <div className='level__inner'>
-                                <h3 className='heading heading--level-3 util--text-align-c'>Click a stock price to change color.</h3>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </main>
