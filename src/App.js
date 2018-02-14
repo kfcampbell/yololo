@@ -62,6 +62,7 @@ class App extends React.Component {
 
   newStockAdded(stockInfo) {
 
+    // problem: *this* here thinks its in the Main component.
     var stocksSymbols = this.state.stockData.map(x => x.symbol);
     stocksSymbols = [...stocksSymbols, stockInfo.symbol];
 
