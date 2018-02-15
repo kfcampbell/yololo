@@ -58,7 +58,7 @@ class Main extends React.Component {
                     <div className='flex__item'>
                         <div className='level level--padding-short'>
                             <div className='level__inner'>
-                                <h1 className='heading heading--level-2 util--text-align-d'>Stocks 'n' Stuff</h1>
+                                <h1 className='heading heading--level-2 util--text-align-d'>Tyler Eliel's Very Own New Tab Extension</h1>
                             </div>
                         </div>
                     </div>
@@ -80,8 +80,8 @@ class Main extends React.Component {
                                         <td>{stockData.symbol}</td>
                                         <td>{stockData.companyName}</td>
                                         <td>${stockData.latestPrice}</td>
-                                        <td>{stockData.change}</td>
-                                        <td>{stockData.ytdChange.toFixed(2)}</td>
+                                        <td>${stockData.change}</td>
+                                        <td>{stockData.ytdChange.toFixed(2)}%</td>
                                     </tr>);
                             })
                         }
